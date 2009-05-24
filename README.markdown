@@ -26,7 +26,7 @@ Usage
     g = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02 14:15:16'))
     
     g.add(User, :created_at)
-    g.add(Item, :sold_at)
+    g.add(Item, :sold_at, :label=>'Things we sold')
     g.add(Product, :sold_at, :conditions=>['merchandise = ?',false])
     ...
     g.to_url --> google chart url with all your data as line graph

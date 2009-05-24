@@ -14,7 +14,8 @@ module DBGraph
     end
 
     def add(model, attribute, options={})
-      data["#{model} #{attribute}"] = count(model, attribute, options)
+      label = options.delete(:label) || "#{model} #{attribute}"
+      data[label] = count(model, attribute, options)
     end
 
     def count(model, attribute, options={})

@@ -108,6 +108,18 @@ describe DBGraph::Line do
       line.add(Product, :created_at, :conditions=>"MONTH(created_at)=2")
       line.data.values.first.should == {"2"=>2}
     end
+
+    it "supports custom labels" do
+      line = DBGraph::Line.new(:months)
+      line.add(Product, :created_at, :label=>'ToC')
+      line.data['ToC'].should_not be_nil
+    end
+
+    it "adds the collected data to a hash" do
+      line = DBGraph::Line.new(:months)
+      line.add(Product, :created_at)
+      line.data['Product created_at'].should_not be_nil
+    end
   end
 
   describe :x_labels do
