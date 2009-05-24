@@ -10,6 +10,11 @@ Usage
 =====
 Install:
     sudo gem install gchartrb
+
+As Gem:
+    sudo gem install grosser-db_graph -s http://gems.github.com/
+
+Or as Rails plugin:
     ./script/plugins install git://github.com/grosser/db_graph.git
 
 Start plotting:
