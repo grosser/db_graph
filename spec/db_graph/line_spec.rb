@@ -1,23 +1,7 @@
 require File.join(File.dirname(__FILE__),'..','spec_helper')
 
 describe DBGraph::Line do
-  describe "hour labels" do
-    before do
-      Product.should_receive(:count).and_return({"0"=>1,"1"=>3,"2"=>3,"23"=>9})
-      @line = DBGraph::Line.new(:hours)
-      @line.add(Product, :created_at)
-    end
-
-    it "has hours as x labels" do
-      @line.x_labels.should == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-    end
-
-    it "has even values as y labels" do
-      @line.y_labels.should == [0,1,2,3,4,5,6,7,8,9]
-    end
-  end
-
-  describe "hour query" do
+  describe "hours" do
     before :all do
       Product.delete_all
       Product.create!(:created_at=>"2009-01-01 23:59:59")
@@ -41,15 +25,7 @@ describe DBGraph::Line do
     end
   end
 
-  describe "day labels" do
-    it "has days as x labels with gaps for readability" do
-      @line = DBGraph::Line.new(:days)
-      gaps = ['','','','']
-      @line.x_labels.should == [gaps,5,gaps,10,gaps,15,gaps,20,gaps,25,gaps,30,''].flatten
-    end
-  end
-
-  describe "day query" do
+  describe "days" do
     before :all do
       Product.delete_all
       Product.create!(:created_at=>"2009-03-31 23:59:59")
@@ -73,15 +49,7 @@ describe DBGraph::Line do
     end
   end
 
-  describe "week labels" do
-    it "has weeks as x labels with gaps for readability" do
-      @line = DBGraph::Line.new(:weeks)
-      gaps = [''] * 9
-      @line.x_labels.should == [0,gaps,10,gaps,20,gaps,30,gaps,40,gaps,50,'',''].flatten
-    end
-  end
-
-  describe "week query" do
+  describe "weeks" do
     before :all do
       Product.delete_all
       Product.create!(:created_at=>"2008-12-31 23:59:59")
@@ -105,14 +73,7 @@ describe DBGraph::Line do
     end
   end
 
-  describe "month labels" do
-    it "has months as x labels" do
-      @line = DBGraph::Line.new(:months)
-      @line.x_labels.should == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    end
-  end
-
-  describe "month query" do
+  describe "months" do
     before :all do
       Product.delete_all
       Product.create!(:created_at=>"2008-12-31 23:59:59")
@@ -136,15 +97,50 @@ describe DBGraph::Line do
     end
   end
 
-  it "accepts options for count" do
-    Product.delete_all
-    3.times{Product.create!}
-    2.times{Product.create!(:created_at=>'2009-02-02')}
-    3.times{Product.create!}
+  describe :add do
+    it "accepts options for count" do
+      Product.delete_all
+      3.times{Product.create!}
+      2.times{Product.create!(:created_at=>'2009-02-02')}
+      3.times{Product.create!}
 
-    @line = DBGraph::Line.new(:months)
-    @line.add(Product, :created_at, :conditions=>"MONTH(created_at)=2")
-    @line.data.values.first.should == {"2"=>2}
+      line = DBGraph::Line.new(:months)
+      line.add(Product, :created_at, :conditions=>"MONTH(created_at)=2")
+      line.data.values.first.should == {"2"=>2}
+    end
+  end
+
+  describe :x_labels do
+    it "has all hours" do
+      line = DBGraph::Line.new(:hours)
+      line.x_labels.should == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    end
+
+    it "has days with gaps for readability" do
+      line = DBGraph::Line.new(:days)
+      gaps = ['','','','']
+      line.x_labels.should == [gaps,5,gaps,10,gaps,15,gaps,20,gaps,25,gaps,30,''].flatten
+    end
+
+    it "has weeks with gaps for readability" do
+      line = DBGraph::Line.new(:weeks)
+      gaps = [''] * 9
+      line.x_labels.should == [0,gaps,10,gaps,20,gaps,30,gaps,40,gaps,50,'',''].flatten
+    end
+
+    it "has all months" do
+      line = DBGraph::Line.new(:months)
+      line.x_labels.should == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    end
+  end
+
+  describe :y_labels do
+    it "has even values as y labels" do
+      Product.should_receive(:count).and_return({"0"=>1,"1"=>3,"2"=>3,"23"=>9})
+      line = DBGraph::Line.new(:hours)
+      line.add(Product, :created_at)
+      line.y_labels.should == [0,1,2,3,4,5,6,7,8,9]
+    end
   end
 
   describe :fill_up_values do
