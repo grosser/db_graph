@@ -1,3 +1,4 @@
+gem 'gchartrb'
 require 'google_chart'
 
 module DBGraph
