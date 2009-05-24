@@ -21,10 +21,10 @@ Start plotting:
 
 TODO
 ====
- - better colors
  - weeks
  - months from beginning of data (->all years)
  - minutes
+
 
 Author
 ======

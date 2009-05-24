@@ -122,24 +122,14 @@ describe DBGraph::Line do
     end
   end
 
-#  describe :x_labels do
-#    it "distributes them evenly" do
-#      subject.data[:test] = {1=>1,12=>2}
-#      subject.data[:test2] = {1=>1,12=>2,4=>1}
-#      subject.x_labels.should == [1,2,3,4,5,6,7,8,9,10,11,12]
-#    end
-#  end
-#
-#  describe :y_labels do
-#    it "distributes them evenly" do
-#      subject.data[:test] = {1=>1,2=>5}
-#      subject.data[:test2] = {1=>3,12=>12,4=>1}
-#      subject.y_labels.should == [1,2,3,4,5,6,7,8,9,10,11,12]
-#    end
-#  end
-#
-#  describe :add do
-#    it ""
-#
-#  end
+  describe :random_color do
+    before do
+      @line = DBGraph::Line.new(:months)
+    end
+
+    it "includes pairs of colors" do
+      @line.should_receive(:rand).and_return 0,2,10
+      @line.send(:random_color).should == '0022aa'
+    end
+  end
 end

@@ -31,7 +31,7 @@ module DBGraph
       size = @options[:size] || '600x500'
       GoogleChart::LineChart.new(size, nil, false) do |line|
         for name, hash in data
-          line.data(name, self.class.filled_and_sorted_values(hash, x_labels))
+          line.data(name, self.class.filled_and_sorted_values(hash, x_labels), random_color)
         end
         line.axis :x, :labels => x_labels
         line.axis :y, :labels => y_labels
@@ -55,6 +55,10 @@ module DBGraph
 
     private
 
+    def random_color
+      [1,2,3].map{ (('0'..'9').to_a + ('a'..'f').to_a)[rand(16)] * 2 } * ''
+    end
+    
     def interval_for(time)
       interval_word = {:hours=>:day,:days=>:month,:months=>:year}[@style]
       start = time.to_date.send("at_beginning_of_#{interval_word}")
