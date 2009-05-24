@@ -1,4 +1,4 @@
-Rails plugin to generate graphs from all your date fields, beautifully simple and combineable.
+Gem/Rails plugin to generate graphs from all your date fields, beautifully simple and combineable.
 
 Examples
 ========
