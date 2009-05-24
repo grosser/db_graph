@@ -4,8 +4,9 @@ Examples
 ========
     ruby examples/multi_line_grahp.rb
 Week and months  
-![weeks](http://chart.apis.google.com/chart?chxl=0:|0||||||||||10||||||||||20||||||||||30||||||||||40||||||||||50|||1:|3|13|23|33|43|53|63|73|83|93&cht=lc&chs=299x300&chdl=Product+created_at|Product+updated_at&chd=s:EUJKPJLQPKRQPGJLJLRQJOJMSLKPPPOHMQRLNKRhwvv9vwypLKJOB,IPPPNGLJVPPGNKLIQJNOONQQNOLNJJPHLJRLKKLcvzxv3tx3MQLRF&chco=553377,dd5566&chxt=x,y)
-![months](http://chart.apis.google.com/chart?chxl=0:|1|2|3|4|5|6|7|8|9|10|11|12|1:|64|95|126|157|188|218|249|280|311|342&cht=lc&chs=299x300&chdl=Product+created_at|Product+updated_at&chd=s:PORLRPQQO92M,RMPNQRONN56R&chco=44ffaa,77cc88&chxt=x,y)
+![weeks](http://chart.apis.google.com/chart?chxl=0:|0||||||||||10||||||||||20||||||||||30||||||||||40||||||||||50|||1:|9|18|28|37|46|56|65|74|84|93&cht=lc&chs=449x400&chdl=Product+created_at|Product+updated_at&chd=s:HQOLNLNNKTOJNLRJNRHQIHPMNHNHHJRNIOIRPJJl618r5sytLGNPH,JSOLPNRMPMNOJNNINPRMLNLKPLFGHNPPPLHJLLKk0oy5vq94LJJLH&chco=dd1199,220011&chxt=x,y)
+![months](http://chart.apis.google.com/chart?chxl=0:|1|2|3|4|5|6|7|8|9|10|11|12|1:|68|102|135|169|202|236|269|303|336|370&cht=lc&chs=449x400&chdl=Product+created_at|Product+updated_at&chd=s:ONPPLMMNN9zN,QPOOPMLNL33L&chco=338888,665511&chxt=x,y)
+
 
 Usage
 =====
