@@ -18,6 +18,14 @@ Start plotting:
     ...
     g.to_url --> google chart url with all your data as line graph
 
+
+TODO
+====
+ - better colors
+ - weeks
+ - months from beginning of data (->all years)
+ - minutes
+
 Author
 ======
 Michael Grosser
