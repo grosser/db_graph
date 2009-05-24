@@ -7,7 +7,7 @@ module DBGraph
     attr_accessor :data
     
     def initialize(style, options={})
-      @style = style
+      @style = style.to_sym
       @options = options
       self.data = ActiveSupport::OrderedHash.new
     end
@@ -18,13 +18,13 @@ module DBGraph
 
     def count(model, attribute)
       scope = if @options[:at]
-        start = @options[:at].to_date
-        ende = start + 1.day - 1.second
+        start, ende = interval_for(@options[:at])
         model.scoped(:conditions=>["#{attribute} BETWEEN ? AND ?", start, ende])
       else
         model
       end
-      scope.count(:group=>"HOUR(#{attribute})")
+      data_type = @style.to_s.sub(/s$/,'').upcase
+      scope.count(:group=>"#{data_type}(#{attribute})")
     end
 
     def to_url
@@ -41,6 +41,9 @@ module DBGraph
     def x_labels
       case @style
       when :hours then (0..23).to_a
+      when :months then (1..12).to_a
+      when :days then (1..31).map{|x|x%5==0 ? x : ''}
+      else raise "#{@style} is not supported"
       end
     end
 
@@ -51,6 +54,13 @@ module DBGraph
     end
 
     private
+
+    def interval_for(time)
+      interval_word = {:hours=>:day,:days=>:month,:months=>:year}[@style]
+      start = time.to_date.send("at_beginning_of_#{interval_word}")
+      ende = start + 1.send(interval_word) - 1.second
+      [start, ende]
+    end
 
     def self.filled_and_sorted_values(hash, keys)
       hash = fill_up_values(hash, keys)
