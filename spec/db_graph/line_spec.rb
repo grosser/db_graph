@@ -1,6 +1,32 @@
 require File.join(File.dirname(__FILE__),'..','spec_helper')
 
 describe DBGraph::Line do
+  describe "minutes" do
+    before :all do
+      Product.delete_all
+      Product.create!(:created_at=>"2009-01-01 10:59:59")
+      Product.create!(:created_at=>"2009-01-01 10:59:59")
+
+      Product.create!(:created_at=>"2009-01-01 11:00:00")
+      Product.create!(:created_at=>"2009-01-01 11:10:10")
+      Product.create!(:created_at=>"2009-01-01 11:10:20")
+      Product.create!(:created_at=>"2009-01-01 11:59:59")
+
+      Product.create!(:created_at=>"2009-01-01 12:00:00")
+      Product.create!(:created_at=>"2009-01-01 12:00:00")
+    end
+
+    it "collects from one hour when at is set" do
+      line = DBGraph::Line.new(:minutes, :at=>Time.parse('2009-01-01 11:15:16'))
+      line.count(Product, :created_at).should == {"0"=>1,"10"=>2,"59"=>1}
+    end
+
+    it "collects from all hours when at is not set" do
+      @line = DBGraph::Line.new(:minutes)
+      @line.count(Product, :created_at).should == {"59"=>3,"0"=>3,"10"=>2}
+    end
+  end
+
   describe "hours" do
     before :all do
       Product.delete_all
@@ -123,6 +149,12 @@ describe DBGraph::Line do
   end
 
   describe :x_labels do
+    it "has minutes with gaps for readability" do
+      line = DBGraph::Line.new(:minutes)
+      gaps = [''] * 9
+      line.x_labels.should == [0,gaps,10,gaps,20,gaps,30,gaps,40,gaps,50,gaps].flatten
+    end
+
     it "has all hours" do
       line = DBGraph::Line.new(:hours)
       line.x_labels.should == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]

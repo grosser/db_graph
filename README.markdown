@@ -31,12 +31,11 @@ Usage
     ...
     g.to_url --> google chart url with all your data as line graph
 
+We got :minutes, :hours, :days, :weeks, :months and seconds/years can be added if someone needs them...
 
 TODO
 ====
  - weeks/months from beginning of data (->all years)
- - minutes
-
 
 Author
 ======

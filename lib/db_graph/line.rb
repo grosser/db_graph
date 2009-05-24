@@ -43,7 +43,7 @@ module DBGraph
     def x_labels
       case @style
       when :days then x_values.map{|x|x%5==0 ? x : ''}
-      when :weeks then x_values.map{|x|x%10==0 ? x : ''}#week 0 == week 52 of last year, e.g. in 2009
+      when :weeks, :minutes then x_values.map{|x|x%10==0 ? x : ''}
       else x_values
       end
     end
@@ -58,9 +58,10 @@ module DBGraph
 
     def x_values
       case @style
+      when :minutes then 0..59
       when :hours then 0..23
       when :days then 1..31
-      when :weeks then 0..52
+      when :weeks then 0..52 #week 0 == week 52 of last year, e.g. in 2009-01-01
       when :months then 1..12
       else raise "#{@style} is not supported"
       end.to_a
@@ -71,10 +72,22 @@ module DBGraph
     end
     
     def interval_for(time)
-      interval_word = {:hours=>:day,:days=>:month,:weeks=>:year,:months=>:year}[@style]
-      start = time.to_date.send("at_beginning_of_#{interval_word}")
+      interval_word = {:minutes=>:hour,:hours=>:day,:days=>:month,:weeks=>:year,:months=>:year}[@style]
+      raise "style #{@style} is not supported" unless interval_word
+
+      start = self.class.at_beginning_of_interval(time, interval_word)
       ende = start + 1.send(interval_word) - 1.second
       [start, ende]
+    end
+
+    def self.at_beginning_of_interval(time, interval_type)
+      #simple substraction does not (seem) to work for long intervals (summer/winter time ?)
+      #and at_beginning_of_hour is not defined
+      if [:year, :month, :week, :day].include? interval_type
+        time.to_date.send("at_beginning_of_#{interval_type}")
+      else
+        time - (time.to_i % 1.send(interval_type))
+      end
     end
 
     def self.filled_and_sorted_values(values, keys)
