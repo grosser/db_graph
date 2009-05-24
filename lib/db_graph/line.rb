@@ -12,16 +12,16 @@ module DBGraph
       self.data = {}
     end
 
-    def add(model, attribute)
-      data["#{model} #{attribute}"] = count(model, attribute)
+    def add(model, attribute, options={})
+      data["#{model} #{attribute}"] = count(model, attribute, options)
     end
 
-    def count(model, attribute)
+    def count(model, attribute, options={})
       scope = if @options[:at]
         start, ende = interval_for(@options[:at])
-        model.scoped(:conditions=>["#{attribute} BETWEEN ? AND ?", start, ende])
+        model.scoped(:conditions=>["#{attribute} BETWEEN ? AND ?", start, ende]).scoped(options)
       else
-        model
+        model.scoped(options)
       end
       data_type = @style.to_s.sub(/s$/,'').upcase
       scope.count(:group=>"#{data_type}(#{attribute})")

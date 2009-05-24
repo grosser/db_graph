@@ -22,6 +22,7 @@ Start plotting:
     
     g.add(User, :created_at)
     g.add(Item, :sold_at)
+    g.add(Product, :sold_at, :conditions=>['merchandise = ?',false])
     ...
     g.to_url --> google chart url with all your data as line graph
 

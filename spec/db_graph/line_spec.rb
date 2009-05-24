@@ -136,6 +136,17 @@ describe DBGraph::Line do
     end
   end
 
+  it "accepts options for count" do
+    Product.delete_all
+    3.times{Product.create!}
+    2.times{Product.create!(:created_at=>'2009-02-02')}
+    3.times{Product.create!}
+
+    @line = DBGraph::Line.new(:months)
+    @line.add(Product, :created_at, :conditions=>"MONTH(created_at)=2")
+    @line.data.values.first.should == {"2"=>2}
+  end
+
   describe :fill_up_values do
     it "adds 0 for every non-filled value" do
       data = [["1",2], ["3",3]]
