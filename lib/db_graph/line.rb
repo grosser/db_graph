@@ -62,15 +62,16 @@ module DBGraph
       [start, ende]
     end
 
-    def self.filled_and_sorted_values(hash, keys)
-      hash = fill_up_values(hash, keys)
-      hash.sort.map{|k,v|v}
+    def self.filled_and_sorted_values(values, keys)
+      array = fill_up_values(values, keys)
+      array.sort.map(&:last)
     end
 
-    def self.fill_up_values(hash, expected_keys)
-      hash = hash.dup
-      expected_keys.each{|k|hash[k.to_s] ||= 0}
-      hash
+    #values is array or hash with integer or string keys
+    def self.fill_up_values(values, expected_keys)
+      values = values.map{|k,v| [k.to_i, v]}
+      expected_keys.each{|k| values += [[k,0]] unless values.assoc(k)}
+      values.sort
     end
 
     def distribute_evently(values, num_steps)

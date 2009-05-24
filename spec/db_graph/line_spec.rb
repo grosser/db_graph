@@ -106,26 +106,19 @@ describe DBGraph::Line do
 
   describe :fill_up_values do
     it "adds 0 for every non-filled value" do
-      data = {"1"=>2,"3"=>3}
+      data = [["1",2], ["3",3]]
       expected_keys = [1,2,3,4,5]
       filled = DBGraph::Line.send(:fill_up_values, data, expected_keys)
-      filled.should == {"1"=>2, "2"=>0, "3"=>3, "4"=>0, "5"=>0}
+      filled.should == [[1,2], [2,0], [3,3], [4,0], [5,0]]
     end
   end
 
   describe :filled_and_sorted_values do
-    before do
-      @data = {"1"=>2,"3"=>3}
-      @expected_keys = [1,2,3,4,5]
-      @filled = DBGraph::Line.send(:filled_and_sorted_values, @data, @expected_keys)
-    end
-
-    it "does not alter the original" do
-      @data.should == {"1"=>2,"3"=>3}
-    end
-
     it "fills/sorts the values" do
-      @filled.should == [2, 0, 3, 0, 0]
+      data = {"1"=>2, "3"=>3, "10"=>4}
+      expected_keys = [1,2,3,4,5,6,7,8,9,10]
+      filled = DBGraph::Line.send(:filled_and_sorted_values, data, expected_keys)
+      filled.should == [2, 0, 3, 0, 0, 0, 0, 0, 0, 4]
     end
   end
 
