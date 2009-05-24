@@ -21,8 +21,7 @@ Start plotting:
 
 TODO
 ====
- - weeks
- - months from beginning of data (->all years)
+ - weeks/months from beginning of data (->all years)
  - minutes
 
 

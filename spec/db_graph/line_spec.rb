@@ -73,6 +73,38 @@ describe DBGraph::Line do
     end
   end
 
+  describe "week labels" do
+    it "has weeks as x labels with gaps for readability" do
+      @line = DBGraph::Line.new(:weeks)
+      gaps = [''] * 9
+      @line.x_labels.should == [0,gaps,10,gaps,20,gaps,30,gaps,40,gaps,50,'',''].flatten
+    end
+  end
+
+  describe "week query" do
+    before :all do
+      Product.delete_all
+      Product.create!(:created_at=>"2008-12-31 23:59:59")
+
+      Product.create!(:created_at=>"2009-01-01 00:00:00")
+      Product.create!(:created_at=>"2009-05-31 13:11:12")
+      Product.create!(:created_at=>"2009-05-31 13:11:11")
+      Product.create!(:created_at=>"2009-12-31 23:59:59")
+
+      Product.create!(:created_at=>"2010-01-01 00:00:00")
+    end
+
+    it "collects from one year when at is set" do
+      @line = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02 14:15:16'))
+      @line.count(Product, :created_at).should == {"0"=>1,"22"=>2,"52"=>1}
+    end
+
+    it "collects from all years when at is not set" do
+      @line = DBGraph::Line.new(:weeks)
+      @line.count(Product, :created_at).should == {"0"=>2,"22"=>2,"52"=>2}
+    end
+  end
+
   describe "month labels" do
     it "has months as x labels" do
       @line = DBGraph::Line.new(:months)

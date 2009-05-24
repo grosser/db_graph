@@ -9,7 +9,7 @@ module DBGraph
     def initialize(style, options={})
       @style = style.to_sym
       @options = options
-      self.data = ActiveSupport::OrderedHash.new
+      self.data = {}
     end
 
     def add(model, attribute)
@@ -31,7 +31,7 @@ module DBGraph
       size = @options[:size] || '600x500'
       GoogleChart::LineChart.new(size, nil, false) do |line|
         for name, hash in data
-          line.data(name, self.class.filled_and_sorted_values(hash, x_labels), random_color)
+          line.data(name, self.class.filled_and_sorted_values(hash, x_values), random_color)
         end
         line.axis :x, :labels => x_labels
         line.axis :y, :labels => y_labels
@@ -40,27 +40,36 @@ module DBGraph
 
     def x_labels
       case @style
-      when :hours then (0..23).to_a
-      when :months then (1..12).to_a
-      when :days then (1..31).map{|x|x%5==0 ? x : ''}
-      else raise "#{@style} is not supported"
+      when :days then x_values.map{|x|x%5==0 ? x : ''}
+      when :weeks then x_values.map{|x|x%10==0 ? x : ''}#week 0 == week 52 of last year, e.g. in 2009
+      else x_values
       end
     end
 
     def y_labels
       values = []
-      data.each{|name,hash|values += self.class.filled_and_sorted_values(hash, x_labels)}
+      data.each{|name,hash|values += self.class.filled_and_sorted_values(hash, x_values)}
       distribute_evently(values, NUM_Y_LABELS)
     end
 
     private
+
+    def x_values
+      case @style
+      when :hours then 0..23
+      when :days then 1..31
+      when :weeks then 0..52
+      when :months then 1..12
+      else raise "#{@style} is not supported"
+      end.to_a
+    end
 
     def random_color
       [1,2,3].map{ (('0'..'9').to_a + ('a'..'f').to_a)[rand(16)] * 2 } * ''
     end
     
     def interval_for(time)
-      interval_word = {:hours=>:day,:days=>:month,:months=>:year}[@style]
+      interval_word = {:hours=>:day,:days=>:month,:weeks=>:year,:months=>:year}[@style]
       start = time.to_date.send("at_beginning_of_#{interval_word}")
       ende = start + 1.send(interval_word) - 1.second
       [start, ende]
