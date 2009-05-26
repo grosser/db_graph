@@ -19,11 +19,14 @@ Or as Rails plugin:
 
 Usage
 =====
-    #all hours/days/weeks/months
+Static interface for single lines
+    DBGraph::Line.url(:weeks, User, :created_at, :at=>Time.now)
+
+Or instance interface for multiple lines
     g = DBGraph::Line.new(:weeks)
 
-    #hours/days/weeks/months in a selected interval (e.g. in 1 year for months)
-    g = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02 14:15:16'))
+    #minutes/hours/days/weeks/months in a selected interval (:at is expanded to a interval, here: 2009-2010)
+    g = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02'))
     
     g.add(User, :created_at)
     g.add(Item, :sold_at, :label=>'Things we sold')

@@ -215,4 +215,16 @@ describe DBGraph::Line do
       @line.send(:random_color).should == '0022aa'
     end
   end
+
+  describe :url do
+    it "can be called with 3 arguments" do
+      url = DBGraph::Line.url(:weeks, Product, :created_at)
+      url.should =~ /^http/
+    end
+
+    it "can be called with at option" do
+      url = DBGraph::Line.url(:weeks, Product, :created_at, :at=>Time.now)
+      url.should =~ /^http/
+    end
+  end
 end

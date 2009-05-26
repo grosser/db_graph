@@ -54,6 +54,12 @@ module DBGraph
       distribute_evently(values, NUM_Y_LABELS)
     end
 
+    def self.url(style, model, attribute, options={})
+      g = self.new(style, :at=>options.delete(:at))
+      g.add model, attribute, options
+      g.to_url
+    end
+
     private
 
     def x_values
