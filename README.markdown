@@ -22,10 +22,11 @@ Usage
     DBGraph::Line.url(:weeks, User, :created_at, :at=>Time.now)
 
 Or instance interface for multiple lines
+    #everything
     g = DBGraph::Line.new(:weeks)
 
-    #minutes/hours/days/weeks/months in a selected interval (:at is expanded to a interval, here: 2009-2010)
-    g = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02'))
+    #selected interval (:at is expanded to a interval, here: 2009-2010)
+    g = DBGraph::Line.new(:weeks, :at=>Time.parse('2009-01-02'), :show_legend=>false)
     
     g.add(User, :created_at)
     g.add(Item, :sold_at, :label=>'Things we sold')

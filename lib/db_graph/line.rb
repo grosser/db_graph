@@ -37,6 +37,7 @@ module DBGraph
         end
         line.axis :x, :labels => x_labels
         line.axis :y, :labels => y_labels
+        line.show_legend = (@options[:show_legend]!=false)
       end.to_url
     end
 
