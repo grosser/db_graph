@@ -19,7 +19,6 @@ Or as Rails plugin:
 
 Usage
 =====
-Static interface for single lines
     DBGraph::Line.url(:weeks, User, :created_at, :at=>Time.now)
 
 Or instance interface for multiple lines
