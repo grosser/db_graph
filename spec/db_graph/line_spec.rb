@@ -211,6 +211,18 @@ describe DBGraph::Line do
       c2 = DBGraph::Line.send(:color_for,'User found_at')
       c1.should == c2
     end
+
+    it "returns different colors for different names" do
+      c1 = DBGraph::Line.send(:color_for,'User found_at')
+      c2 = DBGraph::Line.send(:color_for,'User created_at')
+      c1.should_not == c2
+    end
+
+    it "returns a color for empty/nil/[] names" do
+      [nil,[],'',' '].each do |value|
+        DBGraph::Line.send(:color_for,value).length.should == 6
+      end
+    end
   end
 
   describe :url do

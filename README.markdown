@@ -3,9 +3,8 @@ Gem/Rails plugin to generate graphs from all your date fields, beautifully simpl
 Examples
 ========
 Weeks and months  
-![weeks](http://chart.apis.google.com/chart?chd=s:LSPLPPMLJNIJLLQMNLLLMJMRNKLJPOPILLJJPPHYwypy96z3OMLME,OKLIJNQPOPJIMPIOTLNLSJLLIHNJRHMJNTLNNPOj3p7qy1xyIPLNA&chco=ee8822,dd2244&chxt=x,y&chxl=0:|0||||||||||10||||||||||20||||||||||30||||||||||40||||||||||50|||1:|1|11|21|32|42|52|62|73|83|93&cht=lc&chs=445x400)
-![months](http://chart.apis.google.com/chart?chd=s:ROMONPOMO19O,NQNPPKOPQ63M&chco=ee4466,776677&chxt=x,y&chxl=0:|1|2|3|4|5|6|7|8|9|10|11|12|1:|62|95|127|160|193|225|258|291|323|356&cht=lc&chs=445x400&chdl=Product+created_at|Product+updated_at)
-
+![weeks](http://chart.apis.google.com/chart?chxl=0:|0||||||||||10||||||||||20||||||||||30||||||||||40||||||||||50|||1:|5|14|24|33|42|52|61|70|80|89&cht=lc&chs=445x400&chd=s:MOQLIKNMKMQNROTLIMLMNPPOKPJKKLNORNJKKOOo281ztr1yTROND,IMQJORQJKPMKNNOLONKKMKLMNNVMPKNLQONMKORkv3t7v609JGLNH&chco=dd0099,aa9944&chxt=x,y)
+![months](http://chart.apis.google.com/chart?chxl=0:|1|2|3|4|5|6|7|8|9|10|11|12|1:|68|100|133|165|198|230|263|295|328|360&cht=lc&chs=445x400&chdl=Product+created_at|Product+updated_at&chd=s:PMQNOOMON9yQ,OMONNNQPQ34L&chco=dd0099,aa9944&chxt=x,y)
 
 Install
 =======

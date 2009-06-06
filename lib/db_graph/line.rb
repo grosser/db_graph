@@ -78,8 +78,13 @@ module DBGraph
       end.to_a
     end
 
-    def self.color_for(label)
-      [1,2,3].map{ (('0'..'9').to_a + ('a'..'f').to_a)[rand(16)] * 2 } * ''
+    #determines a unique color based on a name
+    def self.color_for(name)
+      name = name.inspect + "some randomness for fun"
+      hash = (name.hash % 1_000_000_000).to_s #get a hash of a constant size
+      colors = [hash[0..1], hash[2..3], hash[4..5]].map{|c| c.to_f / 100.0 * 16} #use 3 parts of the hash to get numbers from 0 to 15.99
+      palette = ('0'..'9').to_a + ('a'..'f').to_a #hex values 0..f
+      colors.map{|c| palette[c.floor].to_s * 2} * '' #each color is duplicated and the joined
     end
     
     def interval_for(time)
