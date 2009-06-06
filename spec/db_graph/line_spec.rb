@@ -205,14 +205,10 @@ describe DBGraph::Line do
     end
   end
 
-  describe :random_color do
-    before do
-      @line = DBGraph::Line.new(:months)
-    end
-
+  describe :color_for do
     it "includes pairs of colors" do
-      @line.should_receive(:rand).and_return 0,2,10
-      @line.send(:random_color).should == '0022aa'
+      DBGraph::Line.should_receive(:rand).and_return 0,2,10
+      DBGraph::Line.send(:color_for,'User found_at').should == '0022aa'
     end
   end
 

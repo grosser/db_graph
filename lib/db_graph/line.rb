@@ -33,7 +33,7 @@ module DBGraph
       size = @options[:size] || '600x500'
       GoogleChart::LineChart.new(size, nil, false) do |line|
         for name, hash in data
-          line.data(name, self.class.filled_and_sorted_values(hash, x_values), random_color)
+          line.data(name, klass.filled_and_sorted_values(hash, x_values), klass.color_for(name))
         end
         line.axis :x, :labels => x_labels
         line.axis :y, :labels => y_labels
@@ -51,7 +51,7 @@ module DBGraph
 
     def y_labels
       values = []
-      data.each{|name,hash|values += self.class.filled_and_sorted_values(hash, x_values)}
+      data.each{|name,hash|values += klass.filled_and_sorted_values(hash, x_values)}
       distribute_evently(values, NUM_Y_LABELS)
     end
 
@@ -62,6 +62,10 @@ module DBGraph
     end
 
     private
+
+    def klass
+      self.class
+    end
 
     def x_values
       case @style
@@ -74,7 +78,7 @@ module DBGraph
       end.to_a
     end
 
-    def random_color
+    def self.color_for(label)
       [1,2,3].map{ (('0'..'9').to_a + ('a'..'f').to_a)[rand(16)] * 2 } * ''
     end
     
@@ -82,7 +86,7 @@ module DBGraph
       interval_word = {:minutes=>:hour,:hours=>:day,:days=>:month,:weeks=>:year,:months=>:year}[@style]
       raise "style #{@style} is not supported" unless interval_word
 
-      start = self.class.at_beginning_of_interval(time, interval_word)
+      start = klass.at_beginning_of_interval(time, interval_word)
       ende = start + 1.send(interval_word) - 1.second
       [start, ende]
     end
