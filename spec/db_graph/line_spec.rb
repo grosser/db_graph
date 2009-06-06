@@ -206,9 +206,10 @@ describe DBGraph::Line do
   end
 
   describe :color_for do
-    it "includes pairs of colors" do
-      DBGraph::Line.should_receive(:rand).and_return 0,2,10
-      DBGraph::Line.send(:color_for,'User found_at').should == '0022aa'
+    it "returns the same color for the same names" do
+      c1 = DBGraph::Line.send(:color_for,'User found_at')
+      c2 = DBGraph::Line.send(:color_for,'User found_at')
+      c1.should == c2
     end
   end
 
