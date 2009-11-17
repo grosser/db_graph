@@ -1,7 +1,6 @@
-# ---- requirements
 require 'rubygems'
-$LOAD_PATH << File.expand_path("../lib", File.dirname(__FILE__))
+$LOAD_PATH << 'lib'
 require 'activerecord'
 require 'activesupport'
-load File.expand_path("test_model.rb", File.dirname(__FILE__))
+require 'spec/test_model'
 require 'db_graph/line'

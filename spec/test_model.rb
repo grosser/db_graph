@@ -1,8 +1,8 @@
+# mysql -uroot -e 'create database db_graph_test'
 ActiveRecord::Base.establish_connection({
   :adapter => "mysql",
   :database => "db_graph_test",
-  :user => 'root',
-  :password => 'root'
+  :user => 'root'
 })
 
 ActiveRecord::Schema.define(:version => 1) do
