@@ -1,8 +1,9 @@
-# mysql -uroot -e 'create database db_graph_test'
+`mysqladmin create db_graph_test -u build` if ENV["RUN_CODE_RUN"]
+
 ActiveRecord::Base.establish_connection({
   :adapter => "mysql",
   :database => "db_graph_test",
-  :user => 'root'
+  :user => ENV["RUN_CODE_RUN"] ? 'build' : 'root'
 })
 
 ActiveRecord::Schema.define(:version => 1) do
