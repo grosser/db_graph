@@ -9,7 +9,7 @@ Weeks and months
 Install
 =======
 As Gem:
-    sudo gem install grosser-db_graph -s http://gems.github.com/
+    sudo gem install db_graph -s http://gemcutter.org
 
 Or as Rails plugin:
     sudo gem install gchartrb
