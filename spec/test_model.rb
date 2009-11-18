@@ -1,8 +1,8 @@
-`mysqladmin create db_graph_test -u build` if ENV["RUN_CODE_RUN"]
+`mysqladmin create grosser_db_graph_test -u build` if ENV["RUN_CODE_RUN"]
 
 ActiveRecord::Base.establish_connection({
   :adapter => "mysql",
-  :database => "db_graph_test",
+  :database => "grosser_db_graph_test",
   :user => ENV["RUN_CODE_RUN"] ? 'build' : 'root'
 })
 
