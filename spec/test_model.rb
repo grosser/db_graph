@@ -3,7 +3,7 @@
 ActiveRecord::Base.establish_connection({
   :adapter => "mysql",
   :database => "grosser_db_graph_test",
-  :user => ENV["RUN_CODE_RUN"] ? 'build' : 'root'
+  :username => ENV["RUN_CODE_RUN"] ? 'build' : 'root'
 })
 
 ActiveRecord::Schema.define(:version => 1) do
