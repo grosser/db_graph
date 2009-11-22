@@ -9,7 +9,7 @@ Weeks and months
 Install
 =======
 As Gem:
-    sudo gem install db_graph -s http://gemcutter.org
+    sudo gem install db_graph
 
 Or as Rails plugin:
     sudo gem install gchartrb
