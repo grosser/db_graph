@@ -1,6 +1,6 @@
 require 'rubygems'
 $LOAD_PATH << 'lib'
-require 'activerecord'
-require 'activesupport'
+require 'active_record'
+require 'active_support'
 require 'spec/test_model'
 require 'db_graph/line'

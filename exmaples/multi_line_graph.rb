@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'activerecord'
-require 'activesupport'
+require 'active_record'
+require 'active_support'
 require 'spec/test_model'
 
 $LOAD_PATH << File.expand_path("../lib", File.dirname(__FILE__))
